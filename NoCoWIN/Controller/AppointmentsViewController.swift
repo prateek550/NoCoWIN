@@ -20,7 +20,7 @@ class AppointmentsViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        processSlots()
+        self.filteredCenters = AppointmentProcessor.processSlots(slots: slots, filter: filter)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,32 +32,7 @@ class AppointmentsViewController: UIViewController{
         self.tableView.isHidden = self.filteredCenters.isEmpty
     }
     
-    private func processSlots(){
-        
-        if let centers = self.slots?.centers, !centers.isEmpty{
-            
-            centers.forEach { center in
-                if let sessions = center.sessions?.filter({ session in
-                    if let ageLimit = filter?.getAgeLimit(), let dosage = filter?.getDosage(){
-                        return (session.minAgeLimit ?? 0) == (ageLimit == .Eighteen ? 18 : 45) && (dosage == .First_Dose ? ((session.availableCapacityDose1 ?? 0) > 0) : ((session.availableCapacityDose2 ?? 0) > 0))
-                    }
-                    return true
-                }), !sessions.isEmpty{
-                    var filteredCenter = center
-                    filteredCenter.sessions = sessions
-                    filteredCenters.append(filteredCenter)
-                }
-            }
-        }
-    }
 }
-
-/*
- 
- 
-
- 
- */
 
 extension AppointmentsViewController: UITableViewDelegate{
     

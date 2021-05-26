@@ -21,6 +21,10 @@
 		B976F98D26519C0C002904FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B976F98C26519C0C002904FD /* Main.storyboard */; };
 		B976F98F26519F1F002904FD /* ViewCotroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B976F98E26519F1F002904FD /* ViewCotroller.swift */; };
 		B976F99126525B86002904FD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B976F99026525B86002904FD /* Utils.swift */; };
+		B98FB0DC265D69790079CC6B /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98FB0DB265D69790079CC6B /* UserDefaultService.swift */; };
+		B98FB0DE265D6DB90079CC6B /* AppointmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98FB0DD265D6DB90079CC6B /* AppointmentService.swift */; };
+		B98FB0E1265D6F310079CC6B /* AppointmentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98FB0E0265D6F310079CC6B /* AppointmentProcessor.swift */; };
+		B98FB0E3265D7F7A0079CC6B /* UDAppointmentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98FB0E2265D7F7A0079CC6B /* UDAppointmentFilter.swift */; };
 		B9A55CAE2653A1DF002B806A /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A55CAD2653A1DF002B806A /* Actions.swift */; };
 		B9ECCAA426518F7D00BCFECE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9ECCAA326518F7D00BCFECE /* Assets.xcassets */; };
 		B9ECCAAF26518FE600BCFECE /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ECCAAE26518FE600BCFECE /* NetworkHelper.swift */; };
@@ -44,6 +48,10 @@
 		B976F98C26519C0C002904FD /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B976F98E26519F1F002904FD /* ViewCotroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCotroller.swift; sourceTree = "<group>"; };
 		B976F99026525B86002904FD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		B98FB0DB265D69790079CC6B /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		B98FB0DD265D6DB90079CC6B /* AppointmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentService.swift; sourceTree = "<group>"; };
+		B98FB0E0265D6F310079CC6B /* AppointmentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentProcessor.swift; sourceTree = "<group>"; };
+		B98FB0E2265D7F7A0079CC6B /* UDAppointmentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDAppointmentFilter.swift; sourceTree = "<group>"; };
 		B9A55CAD2653A1DF002B806A /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		B9ECCA9C26518F7B00BCFECE /* NoCoWIN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoCoWIN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9ECCAA326518F7D00BCFECE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +98,7 @@
 				B926B65C265A2AEE0069B323 /* Center.swift */,
 				B926B65E265A2B190069B323 /* Session.swift */,
 				B926B66A265A87250069B323 /* AppointmentFilter.swift */,
+				B98FB0E2265D7F7A0079CC6B /* UDAppointmentFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -115,8 +124,8 @@
 		B926B666265A83F90069B323 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B976F98E26519F1F002904FD /* ViewCotroller.swift */,
 				B926B662265A3CDB0069B323 /* AppointmentsViewController.swift */,
+				B976F98E26519F1F002904FD /* ViewCotroller.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -131,6 +140,15 @@
 				B926B66E265A8E880069B323 /* AgeLimit.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B98FB0DF265D6F0E0079CC6B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B98FB0DB265D69790079CC6B /* UserDefaultService.swift */,
+				B98FB0DD265D6DB90079CC6B /* AppointmentService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		B9ECCA9326518F7B00BCFECE = {
@@ -162,6 +180,8 @@
 				B926B665265A83EF0069B323 /* View */,
 				B926B666265A83F90069B323 /* Controller */,
 				B926B667265A84090069B323 /* Utils */,
+				B98FB0DF265D6F0E0079CC6B /* Service */,
+				B98FB0E0265D6F310079CC6B /* AppointmentProcessor.swift */,
 			);
 			path = NoCoWIN;
 			sourceTree = "<group>";
@@ -281,8 +301,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B926B65D265A2AEE0069B323 /* Center.swift in Sources */,
+				B98FB0DC265D69790079CC6B /* UserDefaultService.swift in Sources */,
 				B926B66D265A8DE20069B323 /* Dosage.swift in Sources */,
+				B98FB0DE265D6DB90079CC6B /* AppointmentService.swift in Sources */,
 				B976F99126525B86002904FD /* Utils.swift in Sources */,
+				B98FB0E1265D6F310079CC6B /* AppointmentProcessor.swift in Sources */,
 				B926B65726598EEE0069B323 /* Token.swift in Sources */,
 				B926B669265A84430069B323 /* Districts.swift in Sources */,
 				B976F98526519895002904FD /* AppDelegate.swift in Sources */,
@@ -291,6 +314,7 @@
 				B9A55CAE2653A1DF002B806A /* Actions.swift in Sources */,
 				B9ECCAAF26518FE600BCFECE /* NetworkHelper.swift in Sources */,
 				B976F98F26519F1F002904FD /* ViewCotroller.swift in Sources */,
+				B98FB0E3265D7F7A0079CC6B /* UDAppointmentFilter.swift in Sources */,
 				B926B66F265A8E880069B323 /* AgeLimit.swift in Sources */,
 				B926B65F265A2B190069B323 /* Session.swift in Sources */,
 				B926B66B265A87250069B323 /* AppointmentFilter.swift in Sources */,

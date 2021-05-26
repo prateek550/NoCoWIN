@@ -100,17 +100,44 @@
                                     <constraint firstAttribute="width" secondItem="kP3-u7-aIR" secondAttribute="height" id="loL-EV-f2E"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Ytb-VZ-3qk">
+                                <rect key="frame" x="10" y="69" width="107.5" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odg-oV-Sez">
+                                        <rect key="frame" x="33" y="0.0" width="41.5" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZg-hf-OYo">
+                                        <rect key="frame" x="33" y="34" width="41.5" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMd-5I-OQS">
+                                        <rect key="frame" x="33" y="68" width="41.5" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" red="0.91195264321995961" green="0.92041934156054828" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0PM-O4-CbA" secondAttribute="trailing" constant="5" id="15w-Wg-Ysr"/>
                             <constraint firstItem="0PM-O4-CbA" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="8if-fc-hsQ"/>
+                            <constraint firstItem="kP3-u7-aIR" firstAttribute="leading" secondItem="Ytb-VZ-3qk" secondAttribute="trailing" constant="20" id="99D-ba-Z3Z"/>
                             <constraint firstItem="0PM-O4-CbA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="5" id="BHi-LV-ljt"/>
+                            <constraint firstItem="Ytb-VZ-3qk" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="HRW-Zn-xz6"/>
+                            <constraint firstItem="Ytb-VZ-3qk" firstAttribute="height" secondItem="kP3-u7-aIR" secondAttribute="height" id="My1-f9-1q1"/>
                             <constraint firstItem="kP3-u7-aIR" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="RBx-IZ-o69"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0PM-O4-CbA" secondAttribute="bottom" constant="10" id="SRM-xa-bDT"/>
                             <constraint firstItem="0PM-O4-CbA" firstAttribute="top" secondItem="kP3-u7-aIR" secondAttribute="bottom" constant="15" id="XWg-JF-Dfb"/>
                             <constraint firstItem="kP3-u7-aIR" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="25" id="Xn5-dL-vOI"/>
+                            <constraint firstItem="Ytb-VZ-3qk" firstAttribute="top" secondItem="kP3-u7-aIR" secondAttribute="top" id="gTK-Mt-5df"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LUB-k0-XfH"/>
@@ -122,6 +149,9 @@
                         <outlet property="cityPicker" destination="l10-d4-OQw" id="x1y-KK-bpS"/>
                         <outlet property="cowinnImageView" destination="kP3-u7-aIR" id="bOi-uc-Du5"/>
                         <outlet property="dosageSegment" destination="oUP-Fc-Gdd" id="Xka-sJ-Qbl"/>
+                        <outlet property="labelA" destination="odg-oV-Sez" id="lOP-KX-XI0"/>
+                        <outlet property="labelB" destination="XZg-hf-OYo" id="7lW-Bb-xgY"/>
+                        <outlet property="labelC" destination="hMd-5I-OQS" id="wN5-55-Otx"/>
                         <outlet property="otpField" destination="c5l-mO-chO" id="uyT-6Z-KXG"/>
                     </connections>
                 </viewController>

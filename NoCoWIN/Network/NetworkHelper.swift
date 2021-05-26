@@ -54,7 +54,7 @@ struct NetworkHelper{
                 case 200:
                     response((res.data, nil))
                 case 401:
-                    UserDefaults.standard.removeObject(forKey: ViewController.TOKEN_KEY)
+                    UserDefaults.standard.removeObject(forKey: UserDefaultService.TOKEN_KEY)
                 default:
                     response((nil, res.error))
                 }
@@ -74,7 +74,7 @@ struct NetworkHelper{
                     case 200:
                         response((res.data, nil))
                     case 401:
-                        UserDefaults.standard.removeObject(forKey: ViewController.TOKEN_KEY)
+                        UserDefaults.standard.removeObject(forKey: UserDefaultService.TOKEN_KEY)
                     default:
                         response((nil, res.error))
                     }

@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum Districts: CaseIterable{
+enum Districts: Int, CaseIterable{
     
-    case Bangalore_Urban
-    case East_Delhi
-    case North_Delhi
-    case Central_Delhi
-    case South_Delhi
+    case Bangalore_Urban = 1
+    case East_Delhi = 2
+    case North_Delhi = 3
+    case Central_Delhi = 4
+    case South_Delhi = 5
     
     public static func getDistrictId(district: Districts)-> Int{
         

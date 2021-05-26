@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum AgeLimit: CaseIterable{
+enum AgeLimit: Int, CaseIterable{
     
-    case Eighteen
-    case FortyFive
+    case Eighteen = 1
+    case FortyFive = 2
     
     static func getDisplay(age: AgeLimit)-> String{
         switch age {
@@ -20,5 +20,7 @@ enum AgeLimit: CaseIterable{
             return "45+"
         }
     }
+    
+    
     
 }

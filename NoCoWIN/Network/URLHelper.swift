@@ -50,7 +50,7 @@ enum URLHelper{
     
     private static func getAuthHeader()-> HTTPHeaders?{
         
-        if let token: String = UserDefaults.standard.value(forKey: ViewController.TOKEN_KEY) as? String, !token.isEmpty{
+        if let token: String = UserDefaultService.getPreferences(for: UserDefaultService.TOKEN_KEY) as? String, !token.isEmpty{
             return ["Authorization":"Bearer " + token]
         }
         return nil

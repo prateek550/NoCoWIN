@@ -21,10 +21,12 @@ class ViewController: UIViewController{
     @IBOutlet weak var dosageSegment: UISegmentedControl!
     @IBOutlet weak var cityPicker: UIPickerView!
     
-    private var hudView: PPModalStatusView!
+    @IBOutlet weak var labelA: UILabel!
+    @IBOutlet weak var labelB: UILabel!
+    @IBOutlet weak var labelC: UILabel!
     
-    static let TOKEN_KEY = "TOKEN"
-    private static let USER_PHONE_KEY = "USER_PHONE"
+    
+    private var hudView: PPModalStatusView!
     
     private var txnId: String?
     private var otp: String?
@@ -44,9 +46,13 @@ class ViewController: UIViewController{
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
+        let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.clearCounter))
+        cowinnImageView.addGestureRecognizer(imageTapGesture)
+        cowinnImageView.isUserInteractionEnabled = true
+        
         hudView = PPModalStatusView(frame: self.view.frame)
         
-        if !(UserDefaults.standard.string(forKey: ViewController.TOKEN_KEY) ?? "").isEmpty{
+        if !(UserDefaultService.getPreferences(for: UserDefaultService.TOKEN_KEY) as? String ?? "").isEmpty{
             currentAction = .USER_INPUT_REQUEST_CENTER
         }
         else{
@@ -56,6 +62,8 @@ class ViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        reloadCounters()
         
         cowinnImageView.layer.cornerRadius = cowinnImageView.frame.height/2
         actionBtn.layer.cornerRadius = 10
@@ -76,12 +84,18 @@ class ViewController: UIViewController{
         super.viewDidAppear(animated)
     }
     
+    func reloadCounters(){
+        labelA.text = String(UserDefaultService.getPreferences(for: UserDefaultService.APP_REFRESH_COUNTER) as? Int ?? 0)
+        labelB.text = String(UserDefaultService.getPreferences(for: UserDefaultService.SUCCESS_API_COUNTER) as? Int ?? 0)
+        labelC.text = String(UserDefaultService.getPreferences(for: UserDefaultService.CENTERS_FOUND_COUNTER) as? Int ?? 0)
+    }
+    
     
     @IBAction func btnOnClick(_ sender: UIButton!) {
         
         switch currentAction {
         case .USER_INPUT_PHONE:
-            UserDefaults.standard.setValue(otpField.text, forKey: ViewController.USER_PHONE_KEY)
+            UserDefaultService.updatePreferences(for: UserDefaultService.USER_PHONE_KEY, value: otpField.text)
             currentAction = .USER_INPUT_OTP
         case .USER_INPUT_OTP:
             otp = otpField.text!
@@ -131,12 +145,12 @@ class ViewController: UIViewController{
         switch currentAction {
         case .USER_INPUT_PHONE:
             clearFields()
-            if let phone = UserDefaults.standard.string(forKey: ViewController.USER_PHONE_KEY){
+            if let phone = UserDefaultService.getPreferences(for: UserDefaultService.USER_PHONE_KEY) as? String, !phone.isEmpty{
                 self.otpField.text = phone
             }
         case .USER_INPUT_OTP:
             clearFields()
-            if let phone = UserDefaults.standard.string(forKey: ViewController.USER_PHONE_KEY), !phone.isEmpty{
+            if let phone = UserDefaultService.getPreferences(for: UserDefaultService.USER_PHONE_KEY) as? String, !phone.isEmpty{
                 requestOTP(number: phone)
             }
             else{
@@ -154,9 +168,14 @@ class ViewController: UIViewController{
         case .USER_INPUT_REQUEST_CENTER:
             break
         case .REQUEST_CENTRE:
-            self.appointmentFilter = AppointmnetFilter(ageLimit: AgeLimit.allCases[ageLimitSegment.selectedSegmentIndex], dosage: Dosage.allCases[dosageSegment.selectedSegmentIndex])
+            self.appointmentFilter = AppointmnetFilter(ageLimit: AgeLimit.allCases[ageLimitSegment.selectedSegmentIndex], dosage: Dosage.allCases[dosageSegment.selectedSegmentIndex], district: Districts.allCases[cityPicker.selectedRow(inComponent: 0)])
+            
+            // Update user filter preference
+            UserDefaultService.updatePreferences(for: UserDefaultService.FILTER_KEY, value: self.appointmentFilter)
+            
             getCenters()
         case .VIEW_APPOINTMENTS:
+            
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             if #available(iOS 13.0, *) {
                 if let appointmentVC = mainStoryboard.instantiateViewController(identifier: "appointmentVC") as? AppointmentsViewController{
@@ -238,7 +257,7 @@ class ViewController: UIViewController{
                 
                 if let token = try? JSONDecoder().decode(Token.self, from: response){
                 
-                    UserDefaults.standard.setValue(token.token, forKey: ViewController.TOKEN_KEY)
+                    UserDefaultService.updatePreferences(for: UserDefaultService.TOKEN_KEY, value: token.token)
                     
                     print("token: " + (token.token ?? ""))
                     
@@ -256,44 +275,30 @@ class ViewController: UIViewController{
     
     func getCenters(){
         
-        if let token = UserDefaults.standard.string(forKey: ViewController.TOKEN_KEY), !token.isEmpty{
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound , .carPlay, .criticalAlert], completionHandler: { (granted, _) in
             
-            print("token: "+token)
+        })
+        
+        presentHUD(message: "Requesting Centers", image: UIImage(named: "success"))
+        AppointmentService.getCenters { action, slots in
             
-            let dist = Districts.allCases[cityPicker.selectedRow(inComponent: 0)]
-            
-            let params: RequestParams = [URLQueryItem(name: "district_id", value: String(Districts.getDistrictId(district: dist))),
-                                         URLQueryItem(name: "date", value: Utils.getDateAsString())]
-            
-            presentHUD(message: "Requesting Centers", image: UIImage(named: "success"))
-            
-            NetworkHelper.fetchRequest(endpoint: URLHelper.SLOTS_BY_CALENNDAR, queryParam: params) { response in
-                
-                if let data = response?.data{
-                    if let slots = try? JSONDecoder().decode(Slots.self, from: data){
-                        print(slots)
-                        self.slots = slots
-                        self.currentAction = .VIEW_APPOINTMENTS
-                    }
-                }
-                else{
-                    print("fetching centers failed")
-                    print(response?.error)
-                    
-                    self.currentAction = Actions.USER_INPUT_PHONE
-                }
+            if let haveSlots = slots{
+                self.slots = haveSlots
             }
-        }
-        else if let phone = UserDefaults.standard.string(forKey: ViewController.USER_PHONE_KEY), !phone.isEmpty{
-            currentAction = .USER_INPUT_OTP
-        }
-        else{
-            currentAction = .USER_INPUT_PHONE
+            self.currentAction = action
         }
     }
     
     @objc func dismissKeyboard(){
         view.endEditing(true)
+    }
+    
+    @objc func clearCounter(){
+        UserDefaultService.updatePreferences(for: UserDefaultService.APP_REFRESH_COUNTER, value: 0)
+        UserDefaultService.updatePreferences(for: UserDefaultService.SUCCESS_API_COUNTER, value: 0)
+        UserDefaultService.updatePreferences(for: UserDefaultService.CENTERS_FOUND_COUNTER, value: 0)
+        
+        reloadCounters()
     }
     
     private func presentHUD(message: String, image: UIImage?){

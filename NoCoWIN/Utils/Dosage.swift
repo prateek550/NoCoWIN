@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum Dosage: CaseIterable{
+enum Dosage: Int, CaseIterable{
     
-    case First_Dose
-    case Booster_Dose
+    case First_Dose = 1
+    case Booster_Dose = 2
     
     static func getDisplay(dose: Dosage)-> String{
         switch dose {
