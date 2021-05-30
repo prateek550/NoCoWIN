@@ -30,4 +30,24 @@ struct AppointmentProcessor{
         }
         return filteredCenters
     }
+    
+    static func vaccineCount(centers: [Center], filter: AppointmnetFilter?)-> Int{
+        
+        return centers.reduce(0) { result, c in
+            return result + vaccineCount(center: c, filter: filter)
+        }
+    }
+    
+    static func vaccineCount(center: Center, filter: AppointmnetFilter?)-> Int{
+        
+        return (center.sessions?.reduce(0, { result, s in
+            if filter?.getDosage() == Dosage.First_Dose{
+                return (result ?? 0) + (s.availableCapacityDose1 ?? 0)
+            }
+            else if filter?.getDosage() == Dosage.Booster_Dose{
+                return (result ?? 0) + (s.availableCapacityDose2 ?? 0)
+            }
+            return (result ?? 0)
+        }) ?? 0)
+    }
 }

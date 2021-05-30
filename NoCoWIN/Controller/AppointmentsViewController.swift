@@ -54,7 +54,7 @@ extension AppointmentsViewController: UITableViewDataSource{
         
         (cell.viewWithTag(101) as! UILabel).text = center.address ?? "NA"
         
-        (cell.viewWithTag(102) as! UILabel).text = String(center.sessions?.count ?? 0)
+        (cell.viewWithTag(102) as! UILabel).text = String(AppointmentProcessor.vaccineCount(center: center, filter: self.filter))
         
         if let vaccines = center.sessions?.map({$0.vaccine ?? ""}){
             (cell.viewWithTag(103) as! UILabel).text = Set(vaccines).joined(separator: ",")

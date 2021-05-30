@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 else{
                     UserDefaultService.incrementPreferenceCounter(for: UserDefaultService.CENTERS_FOUND_COUNTER)
-                    self.notifyUser(title: "You got lucky !", body: (String(centers.count)+" centers are waiting for you !!"))
+                    self.notifyUser(title: "You got lucky !", body: (String(AppointmentProcessor.vaccineCount(centers: centers, filter: UserDefaultService.getPreferences(for: UserDefaultService.FILTER_KEY) as? AppointmnetFilter))+" vaccines are available for registeration !!"))
                     completionHandler(.newData)
                 }
             }
