@@ -8,8 +8,8 @@ Currently, app uses Co-WIN public API https://apisetu.gov.in/public/marketplace/
 Future plans, to get access for protected API (realtime data)
 
 # Upcomming features
-* Background task to periodically check for appointments.
-* Send local notification if a slot is available.
+* Background task to periodically check for appointments. ✅
+* Send local notification if a slot is available. ✅
 * Notification action to book an appointment
 * Reminder for getting vaccinated as per the appointment
 * Preview vaccine certificate
